@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from 'react'
+import Form from './Form'
+import Feed from './Feed'
 
 const Home = props => {
-  const defaultValues = { title: "", link: "", description: "" }
-  const useFormState = (initialValues = defaultValues) => {
-    const [values, setValue] = useState(initialValues)
-    const handleChange = ({ target: { name, value } }) => setValue({ ...values, [name]: value })
-
-    return [values, handleChange]
-  }
-
-  const [values, setValues] = useFormState()
   const [posts, setPosts]   = useState([])
-  
- 
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
   const fetchPosts = async () => {
     const res = await fetch('/posts')
     const fetchedPosts = await res.json()
     setPosts(fetchedPosts)
   }
  
-  useEffect(() => {
-    fetchPosts()
-  }, [])
+  const postResource = async (input) => {
+    const res = await fetch('/posts', {
+      method: 'POST',
+      body: JSON.stringify(input)
+    })
 
+    const post = await res.json()
+
+    setPosts([post, ...posts])
+  }
+ 
   return (
     <div>
-      <input type="text" name="title" value={values.title} onChange={setValues} />
-      <input type="text" name="link" value={values.link} onChange={setValues} />
-      <input type="textarea" name="description" value={values.description} onChange={setValues} />
-      { posts.map(p =>
-      <div key={p.id}>
-        {p.title}
-        <a href={p.link}>Link</a>
-        <span>{p.description}</span>
-      </div>)}
+      <Form
+        submitForm={postResource}
+      />
+      <Feed
+        posts={posts}
+      />
     </div>
   
   )

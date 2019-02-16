@@ -25,12 +25,27 @@ end
 
 get '/posts' do
   posts = Post.limit(20).order('created_at DESC')
-  json posts, include: :user
+  posts_json = posts.as_json(include: { user: { only: [:name, :photo] } })
+  json posts_json
+end
+
+post '/posts' do
+  data = JSON.parse(request.body.read).symbolize_keys
+  attrs = { title: data[:title], link: data[:link], description: data[:description], user: @user}
+  post = Post.new(attrs)
+
+  if post.save
+    json post
+  else
+    json post.errors.full_messages
+  end
 end
 
 get "/*" do
   erb :'index.html'
 end
+
+private 
 
 def find_user
   id = session[:user_id]
