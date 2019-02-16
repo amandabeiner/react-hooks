@@ -1,8 +1,19 @@
 const path = require("path")
 const webpack = require("webpack")
+const dotenv = require("dotenv")
 
+const configureEnv = () => {
+  const env = dotenv.config().parsed
+
+  const envKeys = Object.keys(env).reduce((p, n) => {
+    p[`process.env.${n}`] = JSON.stringify(env[n])
+    return p
+  }, {})
+
+  return envKeys
+}
 module.exports = {
-  entry: "./src/index.js",
+  entry: ['babel-polyfill', "./src/index.js"],
   mode: "development",
   module: {
     rules: [
@@ -29,5 +40,5 @@ module.exports = {
     hotOnly: true,
     historyApiFallback: true
   },
-  plugins: [new webpack.HotModuleReplacementPlugin({ tempalte: 'public/index.html'})]
+  plugins: [new webpack.HotModuleReplacementPlugin({ tempalte: 'public/index.html'}), new webpack.DefinePlugin(configureEnv())]
 };
