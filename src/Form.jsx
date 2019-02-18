@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import Card from './Card'
 import TextInput from './TextInput'
 import TextArea from './TextArea'
 import Label from './Label'
@@ -27,25 +28,27 @@ const ResourceForm = (props) => {
   }
 
   return (
-    <Form onSubmit={submitForm}>
-      <TwoAcrossInputs>
-        <InputWrapper>
-          <Label htmlFor="title">Title</Label>
-          <TextInput type="text" name="title" value={values.title} onChange={setValues} />
-        </InputWrapper>
-        <InputWrapper>
-          <Label htmlFor="link">Link</Label>
-          <TextInput type="text" name="link" value={values.link} onChange={setValues} />
-        </InputWrapper>
-      </TwoAcrossInputs>
-        <Label htmlFor="description">Description</Label>
-        <TextArea name="description" value={values.description} onChange={setValues} />
-      <Footer>
-        <AddButton primary type="submit">
-          + Add resource
-        </AddButton>
-      </Footer>
-    </Form>
+    <Card>
+      <Form onSubmit={submitForm}>
+        <TwoAcrossInputs>
+          <InputWrapper>
+            <Label htmlFor="title">Title</Label>
+            <TextInput type="text" name="title" value={values.title} onChange={setValues} />
+          </InputWrapper>
+          <InputWrapper>
+            <Label htmlFor="link">Link</Label>
+            <TextInput type="text" name="link" value={values.link} onChange={setValues} />
+          </InputWrapper>
+        </TwoAcrossInputs>
+          <Label htmlFor="description">Description</Label>
+          <TextArea name="description" value={values.description} onChange={setValues} />
+        <Footer>
+          <AddButton primary type="submit">
+            + Add resource
+          </AddButton>
+        </Footer>
+      </Form>
+    </Card>
   )
 }
 
@@ -55,10 +58,6 @@ const Form = styled.form`
   flex-basis: 100%;
   display: flex;
   flex-wrap: wrap;
-  background-color: white;
-  padding: 5rem;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px hsla(0, 0%, 0%, 0.1);
   justify-content: flex-end;
 `
 
