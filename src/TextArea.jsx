@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-const TextInput = styled.input`
+const TextArea = styled.textarea`
   padding: 1.5rem;
   border-radius: 5px;
   border: none;
@@ -12,4 +12,4 @@ const TextInput = styled.input`
   margin-bottom: 20px;
 `
 
-export default TextInput
+export default TextArea
