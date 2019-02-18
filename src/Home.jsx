@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import Form from './Form'
+import styled from 'styled-components'
+import ResourceForm from './Form'
 import Feed from './Feed'
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5rem 10rem;
+  background-color: #F4F8FB;
+`
 
 const Home = props => {
   const [posts, setPosts]   = useState([])
@@ -27,14 +36,14 @@ const Home = props => {
   }
  
   return (
-    <div>
-      <Form
+    <Container>
+      <ResourceForm
         submitForm={postResource}
       />
       <Feed
         posts={posts}
       />
-    </div>
+    </Container>
   
   )
 }
