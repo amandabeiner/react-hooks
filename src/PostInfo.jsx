@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 const PostInfo = props => (
   <PostBody>
-    <PostTitle>{props.post.title}</PostTitle>
+    <PostHeading>{props.post.title}</PostHeading>
     <ResourceLink href={props.post.link}>See docs</ResourceLink>
-    <ResourceDescription>{props.post.description}</ResourceDescription>
+    <p>{props.post.description}</p>
   </PostBody>
 )
 
@@ -15,13 +15,11 @@ const PostBody = styled.div`
   flex-basis: 85%;
 `
 
-const PostTitle = styled.h3`
-
+const PostHeading = styled.h3`
+  margin-bottom: 5px;
 `
 
 const ResourceLink = styled.a`
-`
-
-const ResourceDescription = styled.p`
-
+  text-decoration: none;
+  color: #1B675D;
 `
