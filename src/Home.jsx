@@ -12,6 +12,7 @@ const Container = styled.div`
 `
 
 const Home = props => {
+  // EXAMPLE_STATE_1: Define state property. Destructure `useState` into property (posts), and updater function (setPosts)
   const [posts, setPosts]   = useState([])
 
   useEffect(() => {
@@ -21,6 +22,8 @@ const Home = props => {
   const fetchPosts = async () => {
     const res = await fetch('/posts')
     const fetchedPosts = await res.json()
+
+    //EXAMPLE_STATE_2: Once posts have been fetched, replace the posts property in state we the API response
     setPosts(fetchedPosts)
   }
  
@@ -32,6 +35,7 @@ const Home = props => {
 
     const post = await res.json()
 
+    // EXAMPLE_STATE_3: When a post is successfully added, replace posts property in state with a new array including the newest post
     setPosts([post, ...posts])
   }
 

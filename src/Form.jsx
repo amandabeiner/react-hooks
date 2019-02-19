@@ -19,10 +19,15 @@ const ResourceForm = (props) => {
     setTags(fetchedTags)
   }
 
+  // EXAMPLE_CUSTOM_1: define default state values
   const defaultValues = { title: "", link: "", description: "", tags: [] }
+
+  // EXAMPLE_CUSTOM_2: use hooks naming conventions
   const useFormInput = (initialValues = defaultValues) => {
+    // EXAMPLE_CUSTOM_3: initialize state properties to store custom hook values
     const [values, setValue] = useState(initialValues)
-    
+
+    // EXAMPLE_CUSTOM_4: define custom updater function to wrap hook updater call
     const handleChange = (e) => {
       const { target } = e
       const newState = target ? {...values, [target.name]: target.value } : { ...values, tags: e}
@@ -30,8 +35,11 @@ const ResourceForm = (props) => {
       setValue(newState)
     }
 
+    // EXAMPLE_CUSTOM_5: return state values and custom handler function
     return [values, handleChange]
   }
+
+  // EXAMPLE_CUSTOM_6: destructure custom hook as normal
   const [values, setValues] = useFormInput()
 
   const formatSelect = () => (
@@ -61,6 +69,7 @@ const ResourceForm = (props) => {
         <TwoAcrossInputs>
           <InputWrapper>
             <Label htmlFor="title">Title</Label>
+            {/* EXAMPLE_CUSTOM_7: use custom values and handlers as normal */}
             <TextInput type="text" name="title" value={values.title} onChange={setValues} />
           </InputWrapper>
           <InputWrapper>

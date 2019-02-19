@@ -15,6 +15,7 @@ export default PostInfo
 
 const PostBody = styled.div`
   flex-basis: 85%;
+  margin-left: 50px;
 `
 
 const PostHeading = styled.h3`

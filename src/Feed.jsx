@@ -9,13 +9,16 @@ const Feed = (props) => {
     setFilter(null)
   }
 
+  // EXAMPLE_EFFECT_1: set the `visiblePosts` state when the component mounts
   useEffect(() => {
     setVisiblePosts(props.posts)
-  }, [props.posts])
+  }, [props.posts]) // EXAMPLE_EFFECT_2: set `visiblePosts` again when these props change (aka fetch resolves)
 
+  // EXAMPLE_EFFECT_3: run the filterPosts function with the filter currently in state
   useEffect(() => {
     filterPosts(filter)
-  }, [filter])
+  }, [filter]) // EXAMPLE_EFFECT_4: re-run this effect whenever the filter state changes
+
 
   const filterPosts = filter => {
     const { posts } = props
@@ -26,6 +29,8 @@ const Feed = (props) => {
     } else {
       visiblePosts = posts
     }
+
+    // EXAMPLE_EFFECT_5: when filter changes, run the filtering rules again and replace visiblePosts state with the result
     setVisiblePosts(visiblePosts)
   }
 
