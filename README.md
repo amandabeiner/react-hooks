@@ -46,3 +46,14 @@ In a new terminal window:
 
 Naviate to `localhost:4567`
 
+## Debugging
+The following error (Ubuntu 16.04) can be resolved by installing `libpq-dev` locally (e.g. `sudo apt-get install libpq-dev`)
+```
+$ bundle install
+...
+An error occurred while installing pg (1.1.4), and Bundler cannot continue.
+Make sure that `gem install pg -v '1.1.4' --source 'https://rubygems.org/'` succeeds before bundling.
+
+In Gemfile:
+  pg
+```
