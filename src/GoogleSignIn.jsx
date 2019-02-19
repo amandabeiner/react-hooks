@@ -39,6 +39,8 @@ const GoogleSignIn = props => {
     })
 
     const user  = await res.json()
+
+    // EXAMPLE_CONTEXT_7: Consume context. Update context with newly authenticated user. 
     context.changeUser(user)
   }
 

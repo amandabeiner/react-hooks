@@ -1,40 +1,53 @@
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import ResourceForm from './Form'
+import Feed from './Feed'
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5rem 10rem;
+  background-color: #F4F8FB;
+`
 
 const Home = props => {
-  const defaultValues = { title: "", link: "", description: "" }
-  const useFormState = (initialValues = defaultValues) => {
-    const [values, setValue] = useState(initialValues)
-    const handleChange = ({ target: { name, value } }) => setValue({ ...values, [name]: value })
-
-    return [values, handleChange]
-  }
-
-  const [values, setValues] = useFormState()
+  // EXAMPLE_STATE_1: Define state property. Destructure `useState` into property (posts), and updater function (setPosts)
   const [posts, setPosts]   = useState([])
-  
- 
-  const fetchPosts = async () => {
-    const res = await fetch('/posts')
-    const fetchedPosts = await res.json()
-    setPosts(fetchedPosts)
-  }
- 
+
   useEffect(() => {
     fetchPosts()
   }, [])
 
+  const fetchPosts = async () => {
+    const res = await fetch('/posts')
+    const fetchedPosts = await res.json()
+
+    //EXAMPLE_STATE_2: Once posts have been fetched, replace the posts property in state we the API response
+    setPosts(fetchedPosts)
+  }
+ 
+  const postResource = async (input) => {
+    const res = await fetch('/posts', {
+      method: 'POST',
+      body: JSON.stringify(input)
+    })
+
+    const post = await res.json()
+
+    // EXAMPLE_STATE_3: When a post is successfully added, replace posts property in state with a new array including the newest post
+    setPosts([post, ...posts])
+  }
+
   return (
-    <div>
-      <input type="text" name="title" value={values.title} onChange={setValues} />
-      <input type="text" name="link" value={values.link} onChange={setValues} />
-      <input type="textarea" name="description" value={values.description} onChange={setValues} />
-      { posts.map(p =>
-      <div key={p.id}>
-        {p.title}
-        <a href={p.link}>Link</a>
-        <span>{p.description}</span>
-      </div>)}
-    </div>
+    <Container>
+      <ResourceForm
+        submitForm={postResource}
+      />
+      <Feed
+        posts={posts}
+      />
+    </Container>
   
   )
 }
