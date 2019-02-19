@@ -34,7 +34,7 @@ const Home = props => {
 
     setPosts([post, ...posts])
   }
- 
+
   return (
     <Container>
       <ResourceForm

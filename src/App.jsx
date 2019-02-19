@@ -31,6 +31,7 @@ const App = (props) => {
     body {
       background-color: #F4F8FB;
       font-family: Lato;
+      color: #4C555C;
     }
   `
   return (

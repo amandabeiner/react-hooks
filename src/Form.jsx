@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import CreatableSelect from 'react-select/lib/Creatable'
 import Card from './Card'
 import TextInput from './TextInput'
 import TextArea from './TextArea'
@@ -7,26 +8,53 @@ import Label from './Label'
 import Button from'./Button'
 
 const ResourceForm = (props) => {
-  const defaultValues = { title: "", link: "", description: "" }
+  const [tags, setTags] = useState([])
+  useEffect(() => {
+    fetchTags()
+  }, [])
 
+  const fetchTags = async() => {
+    const res = await fetch('/tags')
+    const fetchedTags = await res.json()
+    setTags(fetchedTags)
+  }
+
+  const defaultValues = { title: "", link: "", description: "", tags: [] }
   const useFormInput = (initialValues = defaultValues) => {
     const [values, setValue] = useState(initialValues)
-    const handleChange = ({ target: { name, value } }) => setValue({ ...values, [name]: value })
+    
+    const handleChange = (e) => {
+      const { target } = e
+      const newState = target ? {...values, [target.name]: target.value } : { ...values, tags: e}
+
+      setValue(newState)
+    }
 
     return [values, handleChange]
   }
-  
   const [values, setValues] = useFormInput()
 
-  const resetForm = () => {
-    setValues(defaultValues)
-  }
-  
-  const submitForm = (e) => {
-    e.preventDefault()
-    return props.submitForm(values)
+  const formatSelect = () => (
+    tags.map(t => ({ value: t.id, label: `#${t.name}`}))
+  )
+
+  const formatValues = () => {
+    const tags = values.tags
+    const payload = {
+      title: values.title,
+      link: values.link,
+      description: values.description,
+      tags: values.tags.map(t => ({ id: t.value, name: t.label }))
+    }
+
+    return payload
   }
 
+  const submitForm = (e) => {
+    e.preventDefault()
+    return props.submitForm(formatValues())
+  }
+  
   return (
     <Card>
       <Form onSubmit={submitForm}>
@@ -40,8 +68,19 @@ const ResourceForm = (props) => {
             <TextInput type="text" name="link" value={values.link} onChange={setValues} />
           </InputWrapper>
         </TwoAcrossInputs>
-          <Label htmlFor="description">Description</Label>
-          <TextArea name="description" value={values.description} onChange={setValues} />
+        <Label htmlFor="description">Description</Label>
+        <TextArea name="description" value={values.description} onChange={setValues} />
+
+        <SelectWrapper>
+          <Label htmlFor="tags">Tags</Label>
+          <CreatableSelect
+            className="select-picker"
+            value={values.tags}
+            onChange={setValues}
+            isMulti
+            options={formatSelect()}
+          />
+        </SelectWrapper>
         <Footer>
           <AddButton primary type="submit">
             + Add resource
@@ -85,4 +124,12 @@ const InputWrapper = styled.div`
     flex-basis: 100%;
   }
 `
+const SelectWrapper = styled.div`
+  flex-basis: 100%;
+  align-items: flex-start;
+  margin-bottom: 20px;
 
+  .select-picker {
+    max-width: 500px;
+  }
+`
