@@ -19,7 +19,9 @@ post '/auth' do
   body = JSON.parse(request.body.read).symbolize_keys
   attrs = { name: body[:name], email: body[:email], photo: body[:photo] }
   
-  @user = User.find_or_create_by(attrs)
+  @user = User.find_or_create_by(email: body[:email]) do |user|
+    user.update_attributes(attrs)
+  end
   session[:user_id] = @user.id
 
   json @user

@@ -15,10 +15,12 @@ const UserWrapper = styled.div`
   flex-wrap: wrap;
   flex-basis: 15%;
   justify-content: center;
+  align-items: flex-start;
 `
 
 const UserPhoto = styled.img`
   border-radius: 50%;
+  width: 100%;
 `
 const UserName = styled.p`
   flex-basis: 100%;

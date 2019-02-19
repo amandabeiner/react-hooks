@@ -15,4 +15,5 @@ const Tag = styled.span`
   padding: 10px;
   margin-right: 3px;
   border-radius: 5px;
+  cursor: pointer
 `
