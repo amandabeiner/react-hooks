@@ -9,11 +9,13 @@ const GoogleSignIn = props => {
   const context = useContext(UserContext)
 
   useEffect(() => {
-    window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
+    console.log("IN COMPONENT")
+    console.log(JSON.stringify(getGapi()))
+    getGapi().load('auth2', () => {
+      getGapi().auth2.init({
         client_id: GOOGLE_CLIENT_ID
       }).then(() => {
-        window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
+        getGapi().signin2.render(GOOGLE_BUTTON_ID, {
           'scope': 'profile email',
           'width': 200,
           'height': 50,
@@ -24,7 +26,12 @@ const GoogleSignIn = props => {
   }, [])
 
 
+  const getGapi = () => {
+    return window.gapiTest || window.gapi
+  }
+
   const onSuccess = async (googleUser) => {
+    console.log("googleUser", googleUser)
     const profile = googleUser.getBasicProfile()
     const payload = {
       name: profile.getName(),
