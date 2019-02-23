@@ -17,4 +17,11 @@
 //import './commands'
 
 // Alternatively you can use CommonJS syntax:
-// require('./commands')
+require('./commands')
+//
+
+
+// Polyfill window.fetch with XHR
+Cypress.on("window:before:load", win => {
+  win.fetch = null
+})

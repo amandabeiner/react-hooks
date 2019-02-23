@@ -1,5 +1,3 @@
-import { signIn } from '../support/signIn'
-
 describe('User authentication', () => {
   describe('when visiting the root path', () => {
     beforeEach(() => {
@@ -20,7 +18,7 @@ describe('User authentication', () => {
       }
 
       beforeEach(() => {
-        signIn()
+        cy.logIn()
       })
       
       it('should bring them to the home page', () => {
