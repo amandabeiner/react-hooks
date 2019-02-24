@@ -8,6 +8,7 @@ require_relative 'models/user'
 require_relative 'models/post'
 require_relative 'models/tag'
 require_relative 'models/post_tag'
+require_relative 'models/favorite'
 
 enable :sessions
 
@@ -29,7 +30,6 @@ end
 
 get '/posts' do
   posts = Post.limit(20).order('created_at DESC')
-  posts_json = posts.as_json(include: { user: { only: [:name, :photo] } })
   post_response(posts)
 end
 
@@ -61,6 +61,25 @@ get "/tags" do
   json Tag.all
 end
 
+post "/favorites" do
+  data = JSON.parse(request.body.read).symbolize_keys
+  post = Post.find(data[:post_id])
+  fav = Favorite.new(user: @user, post: post) 
+  
+  if fav.save
+    post_response(post)
+  else
+    json fav.errors.full_messages
+  end
+end
+
+delete "/favorites" do 
+  favorite = JSON.parse(request.body.read).symbolize_keys
+  Favorite.find(favorite[:id]).destroy
+
+  post_response(favorite.post)
+end
+
 get "/*" do
   erb :'index.html'
 end
@@ -77,5 +96,9 @@ def find_user
 end
 
 def post_response(post)
-    json post.as_json(include: { user: { only: [:name, :photo] }, tags: { only: [:name, :id] } })
+    json post.as_json(include:
+      { user: { only: [:name, :photo] },
+        tags: { only: [:name, :id] },
+        favorites: { only: [:id], include: { user: { only: [:id, :photo] } } }
+    })
 end

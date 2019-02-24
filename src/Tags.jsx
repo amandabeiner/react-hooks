@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Tags = props => (
-  <div>
+  <TagWrapper>
     {props.tags.map(t => <Tag data-testid="tag" key={t.id} onClick={() => props.setFilter(t.name)}>#{`${t.name}`}</Tag>)}
-  </div>
+  </TagWrapper>
 )
 
 export default Tags
@@ -16,4 +16,8 @@ const Tag = styled.span`
   margin-right: 3px;
   border-radius: 5px;
   cursor: pointer
+`
+
+const TagWrapper = styled.div`
+  flex-basis: 50%;
 `

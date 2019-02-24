@@ -51,6 +51,7 @@ const Feed = (props) => {
         key={p.id}
         post={p}
         setFilter={setFilter}
+        favorite={props.favorite}
       />
       )}
     </FeedWrapper>

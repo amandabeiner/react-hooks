@@ -39,6 +39,25 @@ const Home = props => {
     setPosts([post, ...posts])
   }
 
+  const postFavorite = async (post) => {
+    const res = await fetch('/favorites', {
+      method: 'POST',
+      body: JSON.stringify({ post_id: post.id })
+    })
+
+    const favoritedPost = await res.json()
+
+    setPosts(posts.map((p) => {
+      if (p.id === favoritedPost.id) {
+        return Object.assign({}, p, favoritedPost)
+      } else {
+        return p
+      }
+    }))
+  }
+
+  console.log(posts)
+
   return (
     <Container>
       <ResourceForm
@@ -46,6 +65,7 @@ const Home = props => {
       />
       <Feed
         posts={posts}
+        favorite={postFavorite}
       />
     </Container>
   

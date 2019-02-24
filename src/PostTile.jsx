@@ -7,7 +7,7 @@ import Card from './Card'
 const PostTile = props => (
   <Card data-testid="post-tile">
     <UserInfo user={props.post.user} />
-    <PostInfo post={props.post} setFilter={props.setFilter}/>
+    <PostInfo post={props.post} setFilter={props.setFilter} favorite={props.favorite}/>
   </Card>
 )
 
