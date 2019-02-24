@@ -24,6 +24,10 @@ const GoogleSignIn = props => {
   }, [])
 
 
+  const getGapi = () => {
+    return window.gapiTest || window.gapi
+  }
+
   const onSuccess = async (googleUser) => {
     const profile = googleUser.getBasicProfile()
     const payload = {

@@ -43,7 +43,7 @@ const Feed = (props) => {
       {filter &&
       <FilterLabel>
         <FilterText>Resources matching {`${filter}`}</FilterText>
-        <ClearFilter onClick={clearFilter}>Clear</ClearFilter>
+        <ClearFilter data-testid="clear-btn" onClick={clearFilter}>Clear</ClearFilter>
       </FilterLabel>
       }
       { visiblePosts.map(p =>

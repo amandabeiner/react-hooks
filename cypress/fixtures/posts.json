@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "React Docs",
+    "link": "react.org",
+    "description": "Learn React by reading the docs",
+    "tags": [{ "id" : 1, "name": "react"}],
+    "user" : {
+      "id" : 1,
+      "name": "Patrick McLaren",
+      "email": "patrick@privy.com",
+      "photo": "https://res.cloudinary.com/dpuzgzqir/image/upload/v1550589891/Screenshot_from_2019-02-19_10-23-24_wkwqrv.png"
+    
+    }
+  },
+  {
+    "id": 2,
+    "title": "Creating a Monolithic Rails + React/Redux application",
+    "link": "https://medium.com/@trydelight/creating-a-monolithic-rails-react-redux-application-56edf9a404ea",
+    "description": "A guide on how to bootstrap a new rails and react application with redux",
+    "user": {
+      "id": 2,
+      "name": "Allina Dolor",
+      "email": "allina@privy.com",
+      "photo": "https://res.cloudinary.com/dpuzgzqir/image/upload/v1550589891/Screenshot_from_2019-02-19_10-24-05_alagn2.png"
+    },
+    "tags": [{ "id" : 1, "name": "react"},  { "id": 2, "name": "rails"}]
+  }
+]

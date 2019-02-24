@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Tags = props => (
   <div>
-    {props.tags.map(t => <Tag key={t.id} onClick={() => props.setFilter(t.name)}>#{`${t.name}`}</Tag>)}
+    {props.tags.map(t => <Tag data-testid="tag" key={t.id} onClick={() => props.setFilter(t.name)}>#{`${t.name}`}</Tag>)}
   </div>
 )
 

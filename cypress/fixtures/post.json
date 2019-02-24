@@ -1,0 +1,13 @@
+{
+  "id": 3,
+  "title": "Redux Docs",
+  "link": "redux.org",
+  "description": "Learn Redux by reading the docs",
+  "tags": [{ "id" : 1, "name": "react"}],
+  "user" : {
+    "id" : 1,
+    "name": "Patrick McLaren",
+    "email": "patrick@privy.com",
+    "photo": "https://res.cloudinary.com/dpuzgzqir/image/upload/v1550589891/Screenshot_from_2019-02-19_10-23-24_wkwqrv.png"
+  }
+}
