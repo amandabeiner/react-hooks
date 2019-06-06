@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "yarn run webpack --watch"
+    "start": "webpack-dev-server"
   },
   "author": "Amanda Beiner",
   "license": "MIT",
@@ -16,13 +16,22 @@
     "css-loader": "1.0.0",
     "cypress": "^3.1.5",
     "dotenv": "^6.2.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "style-loader": "0.23.0",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@types/express": "^4.16.1",
     "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.0",
+    "html-webpack-plugin": "^3.2.0",
+    "knex": "^0.16.5",
+    "pg": "^7.11.0",
+    "prettier": "^1.17.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-router": "^4.3.1",
@@ -31,6 +40,7 @@
     "regenerator": "^0.13.3",
     "regenerator-runtime": "^0.13.1",
     "styled-components": "^4.1.3",
+    "typescript": "^3.4.5",
     "whatwg-fetch": "^3.0.0"
   }
 }

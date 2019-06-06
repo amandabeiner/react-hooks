@@ -1,20 +1,33 @@
-const path = require("path")
-const webpack = require("webpack")
-const dotenv = require("dotenv")
+const path = require("path");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const configureEnv = () => {
-  const env = dotenv.config().parsed
+  const env = dotenv.config().parsed;
 
   const envKeys = Object.keys(env).reduce((p, n) => {
-    p[`process.env.${n}`] = JSON.stringify(env[n])
-    return p
-  }, {})
+    p[`process.env.${n}`] = JSON.stringify(env[n]);
+    return p;
+  }, {});
 
-  return envKeys
-}
+  return envKeys;
+};
+
 module.exports = {
-  entry: ['babel-polyfill', "./src/index.js"],
-  mode: "development",
+  entry: ["babel-polyfill", path.join(__dirname, "./index.js")],
+
+  output: {
+    path: __dirname + "/public",
+    filename: "bundle.js",
+    publicPath: "/"
+  },
+  devServer: {
+    contentBase: __dirname + "/public",
+    publicPath: "/",
+    historyApiFallback: true
+  },
+
   module: {
     rules: [
       {
@@ -30,15 +43,6 @@ module.exports = {
     ]
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "public/"),
-    publicPath: "/public/",
-    filename: "bundle.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "public/"),
-    hotOnly: true,
-    historyApiFallback: true
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin({ tempalte: 'public/index.html'}), new webpack.DefinePlugin(configureEnv())]
+  mode: "development",
+  plugins: [new HtmlWebpackPlugin({ template: "./views/index.html" })]
 };

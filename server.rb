@@ -62,7 +62,7 @@ get "/tags" do
 end
 
 get "/*" do
-  erb :'index.html'
+  erb :'/views/index.html'
 end
 
 private 
