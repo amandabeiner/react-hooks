@@ -1,62 +1,56 @@
-import React, { Component, useContext, useEffect } from 'react'
-import { withRouter } from 'react-router'
-import { UserContext } from './App'
+import React, {Component, useContext, useEffect} from 'react';
+import {withRouter} from 'react-router';
+import {UserContext} from './UserContext';
+import {useUser} from './UserContext';
 
-const GOOGLE_BUTTON_ID = 'google-sign-in-button'
-const { GOOGLE_CLIENT_ID } = process.env
+const GOOGLE_BUTTON_ID = 'google-sign-in-button';
+const {GOOGLE_CLIENT_ID} = process.env;
 
 const GoogleSignIn = props => {
-  const context = useContext(UserContext)
+  const [user, setUser] = useUser();
 
   useEffect(() => {
     window.gapi.load('auth2', () => {
-      window.gapi.auth2.init({
-        client_id: GOOGLE_CLIENT_ID
-      }).then(() => {
-        window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
-          'scope': 'profile email',
-          'width': 200,
-          'height': 50,
-          'onsuccess': onSuccess,
+      window.gapi.auth2
+        .init({
+          client_id: GOOGLE_CLIENT_ID,
         })
-      })
-    })
-  }, [])
+        .then(() => {
+          window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
+            scope: 'profile email',
+            width: 200,
+            height: 50,
+            onsuccess: onSuccess,
+          });
+        });
+    });
+  }, []);
 
-
-  const getGapi = () => {
-    return window.gapiTest || window.gapi
-  }
-
-  const onSuccess = async (googleUser) => {
-    const profile = googleUser.getBasicProfile()
+  const onSuccess = async googleUser => {
+    const profile = googleUser.getBasicProfile();
     const payload = {
       name: profile.getName(),
       email: profile.getEmail(),
-      photo: profile.getImageUrl()
-    }
+      photo: profile.getImageUrl(),
+    };
 
     const res = await fetch('/auth', {
       method: 'POST',
       body: JSON.stringify(payload),
-      credentials: 'include'
-    })
+      credentials: 'include',
+    });
 
-    const user  = await res.json()
-
-    // EXAMPLE_CONTEXT_7: Consume context. Update context with newly authenticated user. 
-    context.changeUser(user)
-  }
+    const createdUser = await res.json();
+    setUser(createdUser);
+  };
 
   useEffect(() => {
-    if (context.id) {
-      props.history.push(props.history.location.state.path)
+    if (user.id) {
+      props.history.push('/home');
     }
-  })
+  });
 
-  return (
-    <div id={GOOGLE_BUTTON_ID}  />
-  )
-}
+  return <div id={GOOGLE_BUTTON_ID} />;
+};
 
-export default withRouter(GoogleSignIn)
+export default withRouter(GoogleSignIn);

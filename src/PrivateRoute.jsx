@@ -1,17 +1,19 @@
-import React, { useContext } from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { UserContext } from './App'
+import React, {useContext} from 'react';
+import {Route, Redirect} from 'react-router-dom';
+import GoogleSignIn from './GoogleSignIn';
+import {useUser} from './UserContext';
 
-const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  // EXAMPLE_CONTEXT_6: Consume context. If no user is present, prompt to sign in.
-  const context = useContext(UserContext)
-  
+const PrivateRoute = ({component: Component, path, ...rest}) => {
+  const [user, setUser] = useUser();
+
   return (
     <Route
       {...rest}
-      render={(props) => context.id ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { path } }} />}
+      render={props =>
+        user.id ? <Component {...props} /> : <Redirect to="/login" />
+      }
     />
-  )
-}
+  );
+};
 
-export default PrivateRoute
+export default PrivateRoute;
